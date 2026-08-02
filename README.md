@@ -16,3 +16,12 @@ A simple console application written in Python.
 
 ```bash
 python main.py
+
+## What I learned
+
+- Functions
+- While loops
+- Lists
+- Conditional statements
+- Menu-driven applications
+- Git basics
