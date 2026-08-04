@@ -35,17 +35,44 @@ def show_notes():
         print(f"{index}. {note}")
 
 
-def delete_note():
+def get_note_index():
     if not notes:
-        print("No notes to delete.")
+        print("No notes.")
         return
     show_notes()
-    to_delete = int(input("Enter the index of the note to delete: "))
-    to_delete -= 1  # Adjust for zero-based index
+    try:
+        index = int(input("Enter the index of the note: "))
+    except ValueError:
+        print("Please enter a valid number.")
+        return
+    index -= 1
+    return index
+
+
+def delete_note():
+    to_delete = get_note_index()
+    if to_delete is None:
+        return
     if 0 <= to_delete < len(notes):
         deleted_note = notes.pop(to_delete)
         print(f"Deleted note: {deleted_note}")
         save_notes()
+    else:
+        print("Invalid index number.")
+
+
+def edit_note():
+    to_edit = get_note_index()
+    if to_edit is None:
+        return
+    if 0 <= to_edit < len(notes):
+        new_content = input("Enter new text: ")
+        if not new_content.strip():
+            print("Note cannot be empty.")
+            return
+        notes[to_edit] = new_content
+        save_notes()
+        print("Note edited!")
     else:
         print("Invalid index number.")
 
@@ -59,7 +86,8 @@ def menu():
         1. Add notes
         2. Show notes
         3. Delete notes
-        4. Exit
+        4. Edit note
+        5. Exit
 
         Choose:
         """)
@@ -70,6 +98,8 @@ def menu():
         elif answer == '3':
             delete_note()
         elif answer == '4':
+            edit_note()
+        elif answer == '5':
             print("Goodbye!")
             break
         else:
